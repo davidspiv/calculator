@@ -1,0 +1,33 @@
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#c-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+button,
+#c-screen {
+  height: 9rem;
+  border-radius: 1rem;
+  margin: 0.2rem;
+}
+
+#c-screen {
+  font-size: 9rem;
+  background-color: #292d3e;
+  text-align: right;
+}
+
+#button-container {
+  display: grid;
+  grid: auto-flow / 1fr 1fr 1fr 1fr;
+}
+
+#value-0 {
+  grid-column-start: span 2;
+}
