@@ -17,6 +17,10 @@ button,
   margin: 0.2rem;
 }
 
+button {
+  font-size: 3rem;
+}
+
 #c-screen {
   font-size: 9rem;
   background-color: #292d3e;

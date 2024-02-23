@@ -28,20 +28,40 @@ buttonContainer.addEventListener("click", (e) => {
   }
 
   if (button === "decimal") {
-    for (let i = inputDisplayVal.length - 1; i > -1; i--) {
-      const digit = inputDisplayVal[i];
-      if (isNaN(digit)) {
-        if (digit === ".") {
-          return;
-        }
-        if (digit != "0") {
-          break;
+    const lastDisplayVal = inputDisplayVal[inputDisplayVal.length - 1];
+
+    if (
+      lastDisplayVal === "%" ||
+      lastDisplayVal === "/" ||
+      lastDisplayVal === "*" ||
+      lastDisplayVal === "-" ||
+      lastDisplayVal === "+"
+    ) {
+      cScreen.value = `${inputDisplayVal}0.`;
+      returnFlag = false;
+      return;
+    } else {
+      if (!hasDecimalInOperand()) {
+        console.log(lastDisplayVal);
+        cScreen.value = `${inputDisplayVal}.`;
+      }
+      returnFlag = false;
+      return;
+    }
+
+    function hasDecimalInOperand() {
+      for (let i = inputDisplayVal.length - 1; i > -1; i--) {
+        const digit = inputDisplayVal[i];
+        if (isNaN(digit)) {
+          if (digit === ".") {
+            return true;
+          }
+          if (digit != "0") {
+            return false;
+          }
         }
       }
     }
-    cScreen.value = `${inputDisplayVal}.`;
-    returnFlag = false;
-    return;
   }
 
   //BUTTONS [0-9]
