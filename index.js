@@ -14,54 +14,12 @@ buttonContainer.addEventListener("click", (e) => {
     return;
   }
 
-  if (button === "sign-switch") {
-    cScreen.value = inputDisplayVal * -1;
-    return;
-  }
-
   if (button === "equals") {
     if (inputDisplayVal != "" && isNaN(inputDisplayVal)) {
       cScreen.value = eval(inputDisplayVal);
     }
     returnFlag = true;
     return;
-  }
-
-  if (button === "decimal") {
-    const lastDisplayVal = inputDisplayVal[inputDisplayVal.length - 1];
-
-    if (
-      lastDisplayVal === "%" ||
-      lastDisplayVal === "/" ||
-      lastDisplayVal === "*" ||
-      lastDisplayVal === "-" ||
-      lastDisplayVal === "+"
-    ) {
-      cScreen.value = `${inputDisplayVal}0.`;
-      returnFlag = false;
-      return;
-    } else {
-      if (!hasDecimalInOperand()) {
-        console.log(lastDisplayVal);
-        cScreen.value = `${inputDisplayVal}.`;
-      }
-      returnFlag = false;
-      return;
-    }
-
-    function hasDecimalInOperand() {
-      for (let i = inputDisplayVal.length - 1; i > -1; i--) {
-        const digit = inputDisplayVal[i];
-        if (isNaN(digit)) {
-          if (digit === ".") {
-            return true;
-          }
-          if (digit != "0") {
-            return false;
-          }
-        }
-      }
-    }
   }
 
   //BUTTONS [0-9]
@@ -82,6 +40,43 @@ buttonContainer.addEventListener("click", (e) => {
       }
     }
     return;
+  }
+
+  const operandIndex = getOperandIndex();
+  const currentNum = inputDisplayVal.slice(operandIndex);
+
+  function getOperandIndex() {
+    for (let i = inputDisplayVal.length - 1; i > -1; i--) {
+      const digit = inputDisplayVal[i];
+      if (isNaN(digit)) {
+        if (digit != "0" && digit != ".") {
+          return i + 1;
+        }
+      }
+    }
+    return 0;
+  }
+
+  if (button === "sign-switch") {
+    if (inputDisplayVal[operandIndex - 1] != "-") {
+      const val = inputDisplayVal.slice(0, operandIndex) + currentNum * -1;
+      cScreen.value = val;
+    }
+    return;
+  }
+
+  if (button === "decimal") {
+    if (currentNum === "") {
+      cScreen.value = `${inputDisplayVal}0.`;
+      returnFlag = false;
+      return;
+    } else {
+      if (!currentNum.includes(".")) {
+        cScreen.value = `${inputDisplayVal}.`;
+        returnFlag = false;
+      }
+      return;
+    }
   }
 
   //OPERATORS [%, /, *, -, +]
