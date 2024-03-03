@@ -4,6 +4,8 @@ const buttonContainer = document.querySelector("#button-container");
 
 let returnFlag = false;
 
+console.log("test");
+
 buttonContainer.addEventListener("click", (e) => {
   const button = e.target.id;
   const buttonVal = button[button.length - 1];
